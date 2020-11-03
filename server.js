@@ -8,7 +8,8 @@ var mockScrapes = require('./mock_scrapes')
 
 const app = express()
 
-//app.use(express.static(path.join(__dirname, 'client', 'build')));
+app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname,  'build')));
 
 const db = require('./app/models')
 // db.sequelize.sync({ force: true }).then(() => {
