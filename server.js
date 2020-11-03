@@ -1,20 +1,25 @@
-import path from 'path';
+"use strict";
 
+var _path = _interopRequireDefault(require("path"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
+  require('dotenv').config();
 }
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-var mockScrapes = require('./mock_scrapes')
 
-const app = express()
+var express = require('express');
 
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+var bodyParser = require('body-parser');
 
-const db = require('./app/models')
-// db.sequelize.sync({ force: true }).then(() => {
+var cors = require('cors');
+
+var mockScrapes = require('./mock_scrapes');
+
+var app = express();
+app.use(express["static"](_path["default"].join(__dirname, 'client', 'build')));
+
+var db = require('./app/models'); // db.sequelize.sync({ force: true }).then(() => {
 //   return mockScrapes.forEach(mockScrape => {
 //     db.scrape
 //       .create(mockScrape)
@@ -23,13 +28,12 @@ const db = require('./app/models')
 //       )
 //   })
 // })
-
 // var corsOptions = {
 //   origin: 'localhost:3000'
 // }
 
-app.use(cors())
-// app.use(function(req, res, next) {
+
+app.use(cors()); // app.use(function(req, res, next) {
 //   res.header('Access-Control-Allow-Origin', '*') // update to match the domain you will make the request from
 //   res.header(
 //     'Access-Control-Allow-Headers',
@@ -37,22 +41,24 @@ app.use(cors())
 //   )
 //   next()
 // })
-
 // parse requests of content-type - application/json
-app.use(bodyParser.json())
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json()); // parse requests of content-type - application/x-www-form-urlencoded
 
-// simple route
-app.get('/', (req, res) => {
-  res.json({ message: 'Web scraper API v1.1' })
-})
+app.use(bodyParser.urlencoded({
+  extended: true
+})); // simple route
 
-require('./app/routes/scrape.routes')(app)
+app.get('/', function (req, res) {
+  res.json({
+    message: 'Web scraper API v1.1'
+  });
+});
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`)
-})
+require('./app/routes/scrape.routes')(app); // set port, listen for requests
+
+
+var PORT = process.env.PORT || 8080;
+app.listen(PORT, function () {
+  console.log("Server is running on port ".concat(PORT, "."));
+});
